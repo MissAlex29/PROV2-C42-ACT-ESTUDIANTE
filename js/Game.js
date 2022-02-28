@@ -11,8 +11,7 @@ class Game {
     //cierta tecla
     this.leftKeyActive = false; 
     //Propiedad para verificar la explosión 
-    this.blast = false;
-
+   
   }
 
   //Función para obtener estado de juego de base de datos 
@@ -178,10 +177,9 @@ class Game {
         //Almacenar el valor de playerlife en var currentlife
         var currentlife = allPlayers[prl].life;
 
-        if (currentlife <= 0) {
-          cars[index - 1].changeImage("blast");
-          cars[index - 1].scale = 0.3;
-        }
+        /*if (currentlife <= 0) {
+        
+        }*/
         
         cars[index-1].position.x = x;
         cars[index-1].position.y = y; 
@@ -195,16 +193,16 @@ class Game {
           this.handleFuel(index);
           this.handlePowerCoins(index);
           //Verifica colisón entre vehiculos 
-          this.handleCarACollisionWithCarB(index);
+         
           this.handleObstacleCollision(index);
           
           //Comprobar movimiento y explosión del jugador 
-          if(player.life <= 0){
+          /*if(player.life <= 0){
             this.blast = true;
             this.playerMoving = false;
             //gameState = 2;
             //this.gameOver();
-          }
+          }*/
           
           //Cambiar posición de la cámara 
           camera.position.x = cars[index - 1].position.x;
@@ -336,7 +334,7 @@ class Game {
   
   //Función para controles 
   handlePlayerControls() {
-    if(!this.blast){
+    
       if (keyIsDown(UP_ARROW)) {
         this.playerMoving = true;
         player.positionY += 10;
@@ -353,7 +351,7 @@ class Game {
         player.positionX += 5;
         player.update();
       }
-    }  
+      
   }
 
   //Metodo par comprobar la colisión de los tanques de combustible 
@@ -409,41 +407,9 @@ class Game {
 
   handleCarACollisionWithCarB(index) {
     //Verifica el index del auto, si es 1
-    if (index === 1) {
-      //Entonces verifica si colisiona con el auto 1 en matriz
-      if (cars[index - 1].collide(cars[1])) {
-        //Lo mueve a derecha o izquierda 
-        if (this.leftKeyActive) {
-          player.positionX += 100;
-        } else {
-          player.positionX -= 100;
-        }
-        //Reduciendo la vida del jugador
-        if (player.life > 0) {
-          player.life -= 185 / 4;
-        }
-        //Actaliza BD 
-        player.update();
-      }
-    }
+    
     //Verifica el index del auto, si es 2
-    if (index === 2) {
-      //Entonces verifica si colisiona con el auto 0 en matriz
-      if (cars[index - 1].collide(cars[0])) {
-        //Lo mueve a derecha o izquierda 
-        if (this.leftKeyActive) {
-          player.positionX += 100;
-        } else {
-          player.positionX -= 100;
-        }
-        //Reduciendo la vida del jugador
-        if (player.life > 0) {
-          player.life -= 185 / 4;
-        }
-        //Actaliza BD 
-        player.update();
-      }
-    }
+    
   }
 
 
